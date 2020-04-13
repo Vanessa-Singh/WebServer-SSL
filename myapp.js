@@ -1,56 +1,35 @@
+"use strict"
 var fs = require("fs"); //require file system
 var http = require("http"); //require http functionality
 var path = require("path");
 var url = require("url");
 
-http
-  .createServer(function(req, res) {
-    //get the request url from the browser then
-    //parse it to an object
-    // the parsed variable contains an object information obtained from the url
-    var parsed = url.parse(req.url);
-    var filename = path.parse(parsed.pathname);
+var express = require("express");
+var request = require("request");
+var bodyParser = require("body-parser");
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
 
-    if (filename.name == "") {
-      fname = "index";
-    } else {
-      fname = filename.name;
-    }
-    if (filename.ext == ""){
-      fext = ".html"
-    }
-    else{
-      fext = filename.ext
-    }
-    if (filename.dir == "/"){
-      fdir = ""
-    }
-    else{
-      fdir = filename.dir
-    }
+// sudo npm install -g express
+// sudo npm install -g ejs
+// sudo npm install -g request
+// sudo npm install -g body-parser
+// /home/vagrant/.nvm/versions/node/v13.12.0/bin/npm install -g ejs --save
 
-    froot= (fdir + fname + fext).replace('/', '');
+var ejs = require("ejs");
+const router = express.Router();
+var app = express()
+app.set("vew engine", "ejs");
+app.engine("ejs", require("ejs").__express);
 
-    var mimeTypes = {
-      '.html': 'text/html',
-      '.css': 'text/css',
-      '.js': 'text/javascript',
-      '.png': 'image/png',
-      '.jpg': 'image/jpg',
-      '.gif': 'image/gif'
-    };
+router.get("/", function(req, res){
+  res.render("index", {pagename: "Home"}); // /views/index.ejs
+});
 
-    if(froot){
-      //read the file from document root
-      fs.readFile(froot, function(err, data) {
-        
-        if (mimeTypes.hasOwnProperty(fext)) {
-          res.writeHead(200, {'Content-Type': mimeTypes[fext]}); 
-          res.write("<script>var page='" + fname + "';</script>");
-          res.end(data, 'utf-8'); //End the call with the data that it was pulled
-        }
-        
-      });
-    }
-  })
-  .listen("3306");
+router.get("/about", function(req, res){
+  res.render("about", {pagename: "About"}); // /views/about.ejs
+});
+
+app.use(expresss.static("public"));
+app.use("/", routere);
+var server = app.listen("3306");
