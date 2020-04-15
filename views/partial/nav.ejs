@@ -25,16 +25,23 @@
                 </li>
                 
                 <li class="nav-item">
-                    <a id="services" class="nav-link" href="services.html">Services</a>
+                    <% if (pagename=="Services") {%>
+                    <a class="nav-link" style="color:yellow" href="/services">Services</a>
+                    <%} else{%>
+                    <a class="nav-link" href="/services">Services</a>
+                    <%}%>
                 </li>
                 <li class="nav-item">
-                    <a id="contact" class="nav-link" href="contact.html">Contact</a>
+                    <% if (pagename=="Contact") {%>
+                    <a class="nav-link" style="color:yellow" href="/contact">Contact</a>
+                    <%} else{%>
+                    <a class="nav-link" href="/contact">Contact</a>
+                    <%}%>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
-
 
 
 

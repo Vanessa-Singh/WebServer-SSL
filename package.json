@@ -3,7 +3,7 @@
     "name": "startbootstrap-heroic-features",
     "version": "4.2.1",
     "scripts": {
-        "start": "node_modules/.bin/gulp watch"
+        "devStart": "nodemon myapp.js"
     },
     "description": "An HTML template with a hero heading and feature cards built with Bootstrap",
     "keywords": [
@@ -34,13 +34,14 @@
         "ejs": "^3.0.2",
         "express": "^4.17.1",
         "jquery": "3.4.1",
-        "nodemon": "^2.0.3",
         "request": "^2.88.2"
     },
     "devDependencies": {
         "browser-sync": "2.26.7",
         "del": "^4.1.1",
+        "dotenv": "^8.2.0",
         "gulp": "4.0.2",
-        "merge-stream": "2.0.0"
+        "merge-stream": "2.0.0",
+        "nodemon": "^2.0.3"
     }
 }

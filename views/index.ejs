@@ -25,7 +25,32 @@
 
     <!-- Navigation -->
     <%- include("partial/nav")%>
+
+    <!-- Form -->
+    <%- include("partial/form")%>
     
+    <!-- Error message-->
+    <% if(typeof(errors) != "undefined") {%>
+    <%for (x in errors) {%>
+    <span style="display: flex; 
+        justify-content: flex-end;
+        position: relative;
+        top:130px;
+        margin: 2px 0;">
+        <p style="
+            background-color: red;
+            color: white;
+            width: 150px;
+            border-radius: 10px;
+            padding: 11px;
+            font-size: 12px;
+            margin: 0;
+            height: inherit;
+            top:200px;
+            text-align: center;"><%=errors[x]%></p>
+    </span>
+    <%}%>
+        <%}%>
     <!-- Page Content -->
     <div class="container">
 
@@ -124,11 +149,7 @@
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!--- highlight the current page in the navigation menu-->
-    <script type="text/javascript">
-        document.getElementById(page).style.color = "yellow";
 
-    </script>
 </body>
 </body>
 
