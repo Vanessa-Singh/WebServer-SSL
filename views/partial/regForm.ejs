@@ -1,0 +1,82 @@
+<form id="regForm" action="/register" method="POST">
+    <h1>Register</h1>
+    <section class="tab">Name:
+        <input type="text" class="inputs" name="first name" placeholder="First name">
+        <input type="text" class="inputs" name="last name" placeholder="Last name">
+    </section>
+    <section class="tab">Address:
+        <input type="text" class="inputs" name="address" placeholder="1234 street name">
+        <input type="text" class="inputs" name="city" placeholder="City">
+        <input type="text" class="inputs" name="state" placeholder="State">
+        <input type="text" class="inputs" name="zipcode" placeholder="12345"> 
+    </section>
+    <section class="tab">
+
+        <p>Personal Info: </p>
+
+        <div>
+            <label for="age">Age:</label>
+            <select class="inputs" name="age" id="dropAge">
+
+            </select>
+        </div>
+        <div>
+            <label for="gender">Gender:</label>
+            <label class="gender container">Male
+                <input class="inputs" name="male" type="checkbox">
+                <span class="radio"></span>
+            </label>
+            <label class="gender container">Female
+                <input class="inputs" name="female" type="checkbox">
+                <span class="radio"></span>
+            </label>
+        </div>
+        <div>
+            <label class="consent container">Consent
+                <input class="inputs" name="consent" type="checkbox">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div>
+            <label for="bio">Bio:</label>
+            <textarea class="inputs" name="bio" rows="4" cols="50" placeholder="Write your bio here."></textarea>
+        </div>
+    </section>
+
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+    //Javascript code to populate the number value for the Age dropdown
+    var selectAge = document.getElementById("dropAge");
+    var age;
+    for (let i = 0; i <= 100; i++) {
+        age += "<option value='" + i + "'>" + i + "</option>";
+    }
+    selectAge.innerHTML = age;
+
+    var theInputs = document.getElementsByClassName("inputs")
+
+    for (let i = 0; i < theInputs.length; i++) {
+        theInputs[i].addEventListener("click", function () {
+
+            let inputName = this.name;
+            let errorM = document.getElementsByClassName("alert");
+
+            for (let i = 0; i < errorM.length; i++) {
+                if (inputName == errorM[i].id) {
+                    errorM[i].style.display = 'none';
+                    return;
+                }
+                else if (inputName == "female" || inputName == "male") {
+                    if (errorM[i].id == "gender") {
+                        errorM[i].style.display = 'none';
+                    }
+                }
+            }
+
+        });
+    }
+</script>
+
+

@@ -35,9 +35,12 @@ router.get("/contact", function (req, res) {
   res.render("contact.ejs", { pagename: "Contact" });
 });
 
-router.post("/register", function (req, res) {
-  console.log(req.body.email);
-  console.log(req.body.password);
+router.get("/register", function (req, res) {
+  res.render("register.ejs", { pagename: "Register" });
+});
+
+//LOGIN
+router.post("/login", function (req, res) {
   var errors = [];
 
   if (req.body.email == "") {
@@ -54,14 +57,14 @@ router.post("/register", function (req, res) {
   );
   if (req.body.password == "") {
     errors.push("Password is required");
-  } 
-  else if (req.body.password != "") {
+  } else if (req.body.password != "") {
     if (!strongRegex.test(req.body.password)) {
-      errors.push("Password is not valid.")
-      errors.push("√ Password's length must be a minimum of 8 character")
-          errors.push("√ Password must include at least one upper case, " +
-              "one number and one special character.");
-          
+      errors.push("Password is not valid.");
+      errors.push("√ Password's length must be a minimum of 8 character");
+      errors.push(
+        "√ Password must include at least one upper case, " +
+          "one number and one special character."
+      );
     }
   }
   //Render the index page one more time
@@ -71,12 +74,71 @@ router.post("/register", function (req, res) {
   });
 });
 
+//REGISTER
+router.post("/register", function (req, res) {
+  var errors = {};
+  let gender = true;
+  let consent = true;
+
+  //Reg expression for validationg zip code
+  var zipcodeRegex = /^\d{5}$|^\d{5}-\d{4}$/;
+
+  //Loop through all the inputs and check if they're empty.
+  for (let i in req.body) {
+    if (req.body[i] == "") {
+      errors[i] = `${i} is required`;
+    }
+    //Test ZIP code with Regex 
+    if (i == "zipcode") {
+      
+      if (!zipcodeRegex.test(req.body[i])) {
+        errors[i] = "Invalid ZIP code. Try again.";
+      }
+    }
+
+    if (req.body[i] == req.body.age) {
+      //If age is not greater than 0 that means the user didn't selected age.
+      if (parseInt(req.body.age) <= 0) {
+        errors[i] = "age is required";
+      }
+    }
+    //Verify if consent was checked
+    if (i == "consent") {
+      consent = false;
+    }
+
+    //Verify if gender was selected
+    if (i == "female" || i == "male") {
+      gender = false;
+    }
+  }
+  //If neither gender were checked, generate an error.
+  if (gender) {
+    errors["gender"] = "Please select your gender.";
+  }
+  //If consent was not checked then it will generate an error.
+  if (consent) {
+    errors["consent"] = "consent is required";
+  }
+
+  //Object.keys return an array which contains the property names of the object.
+  //If the length of the length of the array is 0 then the object is empty.
+  if (Object.keys(errors).length === 0) {
+    console.log("errors object is empty");
+    //Render the index page
+    res.render("index.ejs", {
+      pagename: "Home",
+      errors: errors,
+    });
+  } else {
+    //Render the register page one more time
+    res.render("register.ejs", {
+      pagename: "Register",
+      errors: errors,
+    });
+  }
+});
+
 app.use(express.static("public"));
 app.use("/", router);
 var server = app.listen("3306");
-
-// sudo npm install -g express
-// sudo npm install -g ejs
-// sudo npm install -g request
-// sudo npm install -g body-parser
-// /home/vagrant/.nvm/versions/node/v13.12.0/bin/npm install -g ejs --save
