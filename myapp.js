@@ -124,7 +124,6 @@ router.post("/register", function (req, res) {
   //Object.keys return an array which contains the property names of the object.
   //If the length of the length of the array is 0 then the object is empty.
   if (Object.keys(errors).length === 0) {
-    console.log("errors object is empty");
     //Render the index page
     res.render("index.ejs", {
       pagename: "Home",
