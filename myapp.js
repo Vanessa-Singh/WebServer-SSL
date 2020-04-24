@@ -18,26 +18,59 @@ app.engine("ejs", require("ejs").__express);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//Add session
+const session = require("exress-session");
+app.use(session({secret:"secret",saveUninitialized:true,resave:true}));
+var sess;
+
 //Get the app to use route when the user triggers(click) a nav link
 router.get("/", function (req, res) {
-  res.render("index.ejs", { pagename: "Home" }); // /views/index.ejs
+  sess = req.session; //Blank session initialized
+  res.render("index.ejs", { pagename: "Home", sess:sess }); // /views/index.ejs
 });
 
 router.get("/about", function (req, res) {
-  res.render("about.ejs", { pagename: "About" });
+  sess = req.session; 
+  res.render("about.ejs", { pagename: "About", sess:sess});
 });
 
 router.get("/services", function (req, res) {
-  res.render("services.ejs", { pagename: "Services" });
+  sess = req.session; 
+  res.render("services.ejs", { pagename: "Services", sess: sess });
 });
 
 router.get("/contact", function (req, res) {
-  res.render("contact.ejs", { pagename: "Contact" });
+  sess = req.session; 
+  res.render("contact.ejs", { pagename: "Contact", sess: sess });
 });
 
 router.get("/register", function (req, res) {
-  res.render("register.ejs", { pagename: "Register" });
+  sess = req.session; 
+  res.render("register.ejs", { pagename: "Register", sess: sess });
 });
+
+//Profile page after user was successfully logged in.
+router.get("/profile", function(req, res){
+  sess = req.session; 
+  //Check if sess is undefined
+  if(typeof(sess)=="undefined" || sess.loggedin != true){
+    var errors = ["Not a authenticated user"];
+    res.render("index", {pagenmae:"Home", errors:errors});
+  }
+  else{
+    res.render("profile.ejs", {pagename: "Profile", sess:sess});
+  }
+});
+
+//Logout functionality
+router.get("/logout", function(req,res){
+  sess=req.session;
+  sess.destroy(function(err){
+    res.redirect("/");
+  })
+} )
+
+//Login functionality
 
 //LOGIN
 router.post("/login", function (req, res) {
@@ -67,11 +100,25 @@ router.post("/login", function (req, res) {
       );
     }
   }
+
+//Check if email and password match user's login info
+
+//?? if email and password match then allow user to login
+sess = req.session;
+sess.loggedin = true;
+
+  //Render the index page one more time
+  res.render("profile.ejs", {
+    pagename: "Profile",
+    sess: sess,
+  });
+
   //Render the index page one more time
   res.render("index.ejs", {
     pagename: "Home",
     errors: errors,
   });
+  
 });
 
 //REGISTER
