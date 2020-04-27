@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    √
 
     <!-- Custom styles for this template -->
     <link href="css/heroic-features.css" rel="stylesheet">
@@ -23,26 +22,8 @@
 
 <body>
 
-<!-- Navigation -->
-<%- include("partial/nav")%>
-<% if(typeof(errors) != "undefined") {%>
-<%for (x in errors) {%>
-<br><span style="z-index: 12;
-display: block;
-text-align: right;
-background-color: #333a40;
-margin-right: 0px;
-padding-right: 20px;
-color: white;
-width: 155px;
-margin-top: 4px;
-padding-top: 4px;
-right: 0px;
-border-radius: 10px;
-padding: 11px;
-font-size: 12px;"><%=errors[x]%></span>
-<%}%>
-        <%}%>
+    <!-- Navigation -->
+    <%- include("partial/nav")%>
 
     <!-- Page Content -->
     <div class="container">
@@ -142,7 +123,7 @@ font-size: 12px;"><%=errors[x]%></span>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-   
+
 </body>
 </body>
 

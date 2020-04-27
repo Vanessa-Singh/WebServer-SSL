@@ -10,43 +10,20 @@
 
     <title>Heroic Features - Start Bootstrap Template</title>
 
-    <!-- Custom styles for this template -->
-    <link href="css/heroic-features.css" rel="stylesheet">
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/heroic-features.css" rel="stylesheet">
+
 </head>
 
 <body>
 
     <!-- Navigation -->
     <%- include("partial/nav")%>
-
-    <!-- Error message-->
-    <% if(typeof(errors) != "undefined") {%>
-    <%for (x in errors) {%>
-    <span style="display: flex; 
-        justify-content: flex-end;
-        position: relative;
-        top:130px;
-        margin: 2px 0;">
-        <p style="
-            background-color: red;
-            color: white;
-            width: 150px;
-            border-radius: 10px;
-            padding: 11px;
-            font-size: 12px;
-            margin: 0;
-            height: inherit;
-            top:200px;
-            text-align: center;"><%=errors[x]%></p>
-    </span>
-    <%}%>
-        <%}%>
-
 
     <!-- Page Content -->
     <div class="container">

@@ -1,12 +1,15 @@
-"use strict";
+"strict mode"
 var fs = require("fs"); //require file system
 var http = require("http"); //require http functionality
 var path = require("path");
 var url = require("url");
 var express = require("express");
+var eValidator = require("express-validator");
 var request = require("request");
 //Need to use bodyParser() in order for the form data to be available in req.body.
 var bodyParser = require("body-parser");
+//Add session
+const session = require("express-session");
 
 var ejs = require("ejs");
 const router = express.Router();
@@ -17,16 +20,17 @@ app.set("vew engine", "ejs");
 app.engine("ejs", require("ejs").__express);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use()
 
-//Add session
-const session = require("exress-session");
-app.use(session({secret:"secret",saveUninitialized:true,resave:true}));
+
+app.use(session({secret:"secret", saveUninitialized:true, resave:true}));
 var sess;
 
 //Get the app to use route when the user triggers(click) a nav link
 router.get("/", function (req, res) {
   sess = req.session; //Blank session initialized
-  res.render("index.ejs", { pagename: "Home", sess:sess }); // /views/index.ejs
+  res.render("index.ejs", { pagename: "Home", sess:sess, success: false, errors: req.session.errors}); // /views/index.ejs
+  req.session.errors = null;
 });
 
 router.get("/about", function (req, res) {
@@ -101,11 +105,11 @@ router.post("/login", function (req, res) {
     }
   }
 
-//Check if email and password match user's login info
+  //Check if email and password match user's login info
 
-//?? if email and password match then allow user to login
-sess = req.session;
-sess.loggedin = true;
+  //?? if email and password match then allow user to login
+  sess = req.session;
+  sess.loggedin = true;
 
   //Render the index page one more time
   res.render("profile.ejs", {
@@ -124,16 +128,16 @@ sess.loggedin = true;
 //REGISTER
 router.post("/register", function (req, res) {
   var errors = {};
-  let gender = true;
-  let consent = true;
+  var gender = true;
+  var consent = true;
 
   //Reg expression for validationg zip code
   var zipcodeRegex = /^\d{5}$|^\d{5}-\d{4}$/;
 
   //Loop through all the inputs and check if they're empty.
-  for (let i in req.body) {
+  for (var i in req.body) {
     if (req.body[i] == "") {
-      errors[i] = `${i} is required`;
+      errors[i] = i + " is required";
     }
     //Test ZIP code with Regex 
     if (i == "zipcode") {

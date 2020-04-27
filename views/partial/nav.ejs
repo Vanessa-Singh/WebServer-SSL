@@ -38,6 +38,12 @@
                     <a class="nav-link" href="/contact">Contact</a>
                     <%}%>
                 </li>
+                <!-- Condition for the login. Check existance of the session. -->
+                <%if(typeof(sess)!="undefinde" && sess.lgged==true){%>
+                    <a class="nav-link" style="color:yellow" href="/profile">Profile</a>
+                    <a class="nav-link" href="/logout">Logout</a>
+                
+                <%}%>
             </ul>
         </div>
     </div>
@@ -67,3 +73,15 @@ font-size: 12px;">
     </form>
 </div>
 
+<div class="errorBlock">
+    <% if(typeof(errors) != "undefined") {%>
+    <%for (x in errors) {%>
+    <div id="<%- x %>" class="alert">
+        <strong> <%- errors[x] %> </strong>
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+
+    <%}%>
+        <%}%>
+
+</div>
